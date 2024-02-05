@@ -143,6 +143,10 @@ export class AppComponent {
     }
 
     const chartOptions: EChartsOption = {
+      title: {
+        text: `StackedBar Chart - Data: ${selectedDataKeys.join(', ')}`,
+        left: 'center',
+      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
