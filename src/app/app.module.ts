@@ -6,12 +6,14 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { AppComponent } from './app.component';
 import { ChartComponent } from './chart/chart.component';
 import { DataService } from './data.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, ChartComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
