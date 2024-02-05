@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from './data.service';
 import { EChartsOption, BarSeriesOption, PieSeriesOption } from 'echarts';
-import { Observable } from 'rxjs';
 
 interface DataItem {
   Letter: string;
@@ -21,6 +20,7 @@ export class AppComponent {
 
   chartOptions: EChartsOption | null = null;
   allData: DataItem[] = []; // All data loaded once
+  title: any;
 
   constructor(private dataService: DataService) {
     // Initialize selectedData with empty keys
@@ -34,7 +34,6 @@ export class AppComponent {
     });
   }
 
-  // Utilisez cette fonction pour le graphique empilé
   generateChart() {
     const selectedDataKeys = Object.keys(this.selectedData).filter(
       (key) => this.selectedData[key]
@@ -72,103 +71,6 @@ export class AppComponent {
       this.chartOptions = chartOptions;
     }
   }
-
-  // private generateStackedBarChartOptions(selectedDataKeys: string[]): void {
-  //   const xAxisData: string[] = [];
-  //   const seriesData: { [key: string]: number[] } = {
-  //     AllData: [],
-  //     Vowels: [],
-  //     Consonants: [],
-  //   };
-
-  //   selectedDataKeys.forEach((key) => {
-  //     const dataItem = this.allData.find((item) => item.Letter === key);
-
-  //     if (dataItem) {
-  //       xAxisData.push(dataItem.Letter);
-  //       seriesData['AllData'].push(dataItem.Freq);
-  //       // Vérifiez si la lettre est une voyelle
-  //       const isVowel = ['a', 'e', 'i', 'o', 'u', 'y'].includes(
-  //         key.toLowerCase()
-  //       );
-
-  //       // Ajoutez à la série correspondante
-  //       if (isVowel) {
-  //         seriesData['Vowels'].push(dataItem.Freq);
-  //         console.log(seriesData['Vowels']);
-  //       } else {
-  //         seriesData['Consonants'].push(dataItem.Freq);
-  //         console.log(seriesData['Consonants']);
-  //       }
-  //     }
-  //   });
-
-  //   const chartOptions: EChartsOption = {
-  //     title: {
-  //       text: `Stacked Bar Chart - Data: ${selectedDataKeys.join(', ')}`,
-  //       left: 'center',
-  //     },
-  //     legend: {
-  //       data: xAxisData,
-  //       align: 'right',
-  //       top: 30,
-  //     },
-  //     xAxis: {
-  //       type: 'category',
-  //       data: ['All Data', 'Vowels', 'Consonants'],
-  //     },
-  //     yAxis: {
-  //       type: 'value',
-  //     },
-  //     series: [
-  //       {
-  //         name: 'All Data',
-  //         type: 'bar',
-  //         stack: 'stack',
-  //         data: seriesData['Vowels'],
-  //       },
-  //       {
-  //         name: 'Vowels',
-  //         type: 'bar',
-  //         stack: 'stack',
-  //         data: seriesData['Vowels'],
-  //       },
-  //       {
-  //         name: 'Consonants',
-  //         type: 'bar',
-  //         stack: 'stack',
-  //         data: seriesData['Consonants'],
-  //       },
-  //     ],
-  //   };
-
-  //   // const chartOptions: EChartsOption = {
-  //   //   xAxis: {
-  //   //     type: 'category',
-  //   //     data: ['A', 'B', 'C', 'D', 'E'],
-  //   //   },
-  //   //   yAxis: {
-  //   //     type: 'value',
-  //   //   },
-  //   //   series: [
-  //   //     {
-  //   //       name: 'Vowels',
-  //   //       type: 'bar',
-  //   //       stack: 'stack',
-  //   //       data: [1, 2, 3, 4, 5],
-  //   //     },
-  //   //     {
-  //   //       name: 'Consonants',
-  //   //       type: 'bar',
-  //   //       stack: 'stack',
-  //   //       data: [5, 4, 3, 2, 1],
-  //   //     },
-  //   //   ],
-  //   // };
-
-  //   // Assigner les options au graphique
-  //   this.chartOptions = chartOptions;
-  // }
 
   private generateStackedBarChartOptions(selectedDataKeys: string[]): void {
     const xAxisData: string[] = [];
@@ -279,24 +181,6 @@ export class AppComponent {
     const xAxisData: string[] = [];
     const seriesData: number[] = [];
     const dataLegend: { value: number; name: string }[] = [];
-
-    // if (this.allDataSelected) {
-    //   // Si "All Data" est sélectionné, utilisez toutes les données
-    //   allData.forEach((item) => {
-    //     xAxisData.push(item.Letter);
-    //     seriesData.push(item.Freq);
-    //   });
-    // } else {
-    //   // Utilisez uniquement les données sélectionnées individuellement
-    //   selectedDataKeys.forEach((key) => {
-    //     const dataItem = allData.find((item) => item.Letter === key);
-
-    //     if (dataItem) {
-    //       xAxisData.push(dataItem.Letter);
-    //       seriesData.push(dataItem.Freq);
-    //     }
-    //   });
-    // }
 
     if (this.allDataSelected) {
       // Si "All Data" est sélectionné, utilisez toutes les données

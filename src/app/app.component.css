@@ -6,19 +6,13 @@
   display: flex;
 }
 
-h1 {
-  text-align: center;
-  width: 100%;
-  margin-top: 1%;
-  margin-bottom: 0;
-}
 .labelText {
   font-size: large;
 }
 .filter-section {
   width: 24%;
   background-color: rgb(146, 191, 236);
-  min-height: 92vh;
+  min-height: 100vh;
 }
 
 .radio-group {
@@ -28,7 +22,7 @@ h1 {
 }
 
 .data-filter {
-  margin-top: 1%;
+  margin-top: 2%;
   /* border: #45a049 solid 1px; */
 }
 
@@ -43,7 +37,7 @@ h1 {
 }
 button {
   margin: auto;
-  margin-top: 1%;
+  margin-top: 2%;
   padding: 10px;
   background-color: #4caf50;
   color: white;
@@ -60,13 +54,11 @@ button:hover {
   margin-top: 5%;
 }
 
-/* Styles for stacked bar chart filter */
 .data-filter p {
   margin-top: 10px;
   font-weight: bold;
 }
 
-/* Additional styles for legends and title */
 .chart-title {
   font-size: 20px;
   font-weight: bold;
