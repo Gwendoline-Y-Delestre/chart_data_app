@@ -1,60 +1,68 @@
 <main class="main">
-  <div class="filter-section">
-    <label for="chartType">Choose Chart Type:</label>
-    <div class="radio-group">
-      <label>
-        <input
-          type="radio"
-          name="chartType"
-          [(ngModel)]="selectedChartType"
-          value="bar"
-        />
-        Bar Chart
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="chartType"
-          [(ngModel)]="selectedChartType"
-          value="line"
-        />
-        Line Chart
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="chartType"
-          [(ngModel)]="selectedChartType"
-          value="pie"
-        />
-        Pie Chart
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="chartType"
-          [(ngModel)]="selectedChartType"
-          value="stack"
-        />
-        Stacked Bar Chart
-      </label>
-    </div>
-
-    <div class="data-filter">
-      <label>Data Filters:</label>
-      <div *ngFor="let dataKey of dataKeys">
-        <input type="checkbox" [(ngModel)]="selectedData[dataKey]" />
-        {{ dataKey }}
-      </div>
-      <div>
-        <input type="checkbox" [(ngModel)]="allDataSelected" /> All Data
-      </div>
-    </div>
-
-    <button (click)="generateChart()">Generate Chart</button>
+  <div>
+    <h1>Custom Chart Generator</h1>
   </div>
+  <div class="generator">
+    <div class="filter-section">
+      <label for="chartType" class="labelText">Choose Chart Type:</label>
+      <div class="radio-group">
+        <label for="bar"
+          ><input
+            type="radio"
+            id="bar"
+            name="chartType"
+            [(ngModel)]="selectedChartType"
+            value="bar"
+          />
+          Bar Chart</label
+        >
+        <label for="pie">
+          <input
+            type="radio"
+            id="pie"
+            name="chartType"
+            [(ngModel)]="selectedChartType"
+            value="pie"
+          />
+          Pie Chart</label
+        >
+        <label for="line">
+          <input
+            type="radio"
+            id="line"
+            name="chartType"
+            [(ngModel)]="selectedChartType"
+            value="line"
+          />
+          Line Chart</label
+        >
+        <label for="stackedBar">
+          <input
+            type="radio"
+            id="stackedBar"
+            name="chartType"
+            [(ngModel)]="selectedChartType"
+            value="stackedBar"
+          />
+          Stacked Bar Chart</label
+        >
+      </div>
+      <div class="data-filter">
+        <label class="labelText">Data Filters:</label>
+        <div *ngFor="let dataKey of dataKeys">
+          <input type="checkbox" [(ngModel)]="selectedData[dataKey]" />
+          {{ dataKey }}
+        </div>
+        <div>
+          <input type="checkbox" [(ngModel)]="allDataSelected" /> All Data
+        </div>
+      </div>
 
-  <div class="chart-section">
-    <app-chart *ngIf="chartOptions" [chartOptions]="chartOptions"></app-chart>
+      <button (click)="generateChart()">Generate Chart</button>
+    </div>
+
+    <div class="chart-section">
+      <app-chart *ngIf="chartOptions" [chartOptions]="chartOptions"></app-chart>
+    </div>
   </div>
 </main>

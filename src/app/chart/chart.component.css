@@ -1,12 +1,9 @@
-:host {
-  display: block;
+.chart-container {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .chart {
-  width: 700px;
-  height: 400px; /* Ajustez la hauteur selon vos préférences */
-}
-.chart-container {
-  width: 400px; /* ou une largeur spécifique */
-  height: 400px; /* ou une hauteur spécifique */
+  height: 400px;
 }

@@ -1,0 +1,78 @@
+.main {
+  margin: none;
+  padding: none;
+}
+.generator {
+  display: flex;
+}
+
+h1 {
+  text-align: center;
+  width: 100%;
+  margin-top: 1%;
+  margin-bottom: 0;
+}
+.labelText {
+  font-size: large;
+}
+.filter-section {
+  width: 24%;
+  background-color: rgb(146, 191, 236);
+  min-height: 92vh;
+}
+
+.radio-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.data-filter {
+  margin-top: 1%;
+  /* border: #45a049 solid 1px; */
+}
+
+.chart-section {
+  flex: 1;
+  margin: auto;
+}
+
+.filter-section button {
+  display: block;
+  margin: 0 auto;
+}
+button {
+  margin: auto;
+  margin-top: 1%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.chart-container {
+  margin-top: 5%;
+}
+
+/* Styles for stacked bar chart filter */
+.data-filter p {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Additional styles for legends and title */
+.chart-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.chart-legend {
+  margin-top: 10px;
+}

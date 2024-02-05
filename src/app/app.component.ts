@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from './data.service';
-import { EChartsOption, LineSeriesOption } from 'echarts';
+import { EChartsOption, BarSeriesOption } from 'echarts';
 import { Observable } from 'rxjs';
 
 interface DataItem {
@@ -20,10 +20,12 @@ export class AppComponent {
   dataKeys: string[] = []; // Array to hold data keys
 
   chartOptions: EChartsOption | null = null;
+  allData: DataItem[] = []; // All data loaded once
 
   constructor(private dataService: DataService) {
     // Initialize selectedData with empty keys
     this.dataService.getData().subscribe((data: DataItem[]) => {
+      this.allData = data; // Store all data once
       data.forEach((item) => {
         const key = item.Letter;
         this.selectedData[key] = false;
@@ -32,24 +34,123 @@ export class AppComponent {
     });
   }
 
+  // Utilisez cette fonction pour le graphique empilé
   generateChart() {
     const selectedDataKeys = Object.keys(this.selectedData).filter(
       (key) => this.selectedData[key]
     );
-
     if (selectedDataKeys.length === 0 && !this.allDataSelected) {
       console.log('Select at least one data or choose all data');
       return;
     }
-
-    this.dataService.getData().subscribe((allData: DataItem[]) => {
+    if (this.selectedChartType === 'stackedBar') {
+      this.generateStackedBarChartOptions(selectedDataKeys);
+    } else {
       const chartOptions = this.generateChartOptions(
         this.selectedChartType,
         selectedDataKeys,
-        allData
+        this.allData // Use stored data
       );
+
       this.chartOptions = chartOptions;
+    }
+  }
+
+  private generateStackedBarChartOptions(selectedDataKeys: string[]): void {
+    const xAxisData: string[] = [];
+    const seriesData: { [key: string]: number[] } = {
+      AllData: [],
+      Vowels: [],
+      Consonants: [],
+    };
+
+    selectedDataKeys.forEach((key) => {
+      const dataItem = this.allData.find((item) => item.Letter === key);
+
+      if (dataItem) {
+        xAxisData.push(dataItem.Letter);
+        seriesData['AllData'].push(dataItem.Freq);
+        // Vérifiez si la lettre est une voyelle
+        const isVowel = ['a', 'e', 'i', 'o', 'u', 'y'].includes(
+          key.toLowerCase()
+        );
+
+        // Ajoutez à la série correspondante
+        if (isVowel) {
+          seriesData['Vowels'].push(dataItem.Freq);
+          console.log(seriesData['Vowels']);
+        } else {
+          seriesData['Consonants'].push(dataItem.Freq);
+          console.log(seriesData['Consonants']);
+        }
+      }
     });
+
+    const chartOptions: EChartsOption = {
+      title: {
+        text: `Stacked Bar Chart - Data: ${selectedDataKeys.join(', ')}`,
+        left: 'center',
+      },
+      legend: {
+        data: xAxisData,
+        align: 'right',
+        top: 30,
+      },
+      xAxis: {
+        type: 'category',
+        data: ['All Data', 'Vowels', 'Consonants'],
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          name: 'All Data',
+          type: 'bar',
+          stack: 'stack',
+          data: seriesData['Vowels'],
+        },
+        {
+          name: 'Vowels',
+          type: 'bar',
+          stack: 'stack',
+          data: seriesData['Vowels'],
+        },
+        {
+          name: 'Consonants',
+          type: 'bar',
+          stack: 'stack',
+          data: seriesData['Consonants'],
+        },
+      ],
+    };
+
+    // const chartOptions: EChartsOption = {
+    //   xAxis: {
+    //     type: 'category',
+    //     data: ['A', 'B', 'C', 'D', 'E'],
+    //   },
+    //   yAxis: {
+    //     type: 'value',
+    //   },
+    //   series: [
+    //     {
+    //       name: 'Vowels',
+    //       type: 'bar',
+    //       stack: 'stack',
+    //       data: [1, 2, 3, 4, 5],
+    //     },
+    //     {
+    //       name: 'Consonants',
+    //       type: 'bar',
+    //       stack: 'stack',
+    //       data: [5, 4, 3, 2, 1],
+    //     },
+    //   ],
+    // };
+
+    // Assigner les options au graphique
+    this.chartOptions = chartOptions;
   }
 
   private generateChartOptions(
@@ -78,14 +179,23 @@ export class AppComponent {
       });
     }
 
-    const series: LineSeriesOption[] = [
+    const series: BarSeriesOption[] = [
       {
         data: seriesData,
-        type: chartType as 'line',
+        type: chartType as 'bar',
       },
     ];
 
     return {
+      title: {
+        text: `${chartType} Chart - Data: ${selectedDataKeys.join(', ')}`,
+        left: 'center',
+      },
+      legend: {
+        data: [`${chartType} Chart`],
+        align: 'right',
+        top: 30,
+      },
       xAxis: {
         type: 'category',
         data: xAxisData,
